@@ -23,18 +23,21 @@ const ProjectModule = {
 			this.isBusy = true;
 			setTimeout(() => {
 				if (this.participants.length === 0) {
-					callbackFunction(null);
 					this.isBusy = false;
+					callbackFunction(null);
+					//this.isBusy = false;
 				} else {
 					for (let i = 0; i < this.participants.length; i++) {
 						if (functor(this.participants[i])) {
-							callbackFunction(this.participants[i]);
 							this.isBusy = false;
+							callbackFunction(this.participants[i]);
+							//this.isBusy = false;
 							break;
 						} else {
 							if (i === this.participants.length - 1) {
-								callbackFunction(null);
 								this.isBusy = false;
+								callbackFunction(null);
+								//this.isBusy = false;
 							}
 						}
 					}
@@ -54,8 +57,9 @@ const ProjectModule = {
 						tmp_arr.push(this.participants[i]);
 					}
 				}
-				callbackFunction(tmp_arr);
 				this.isBusy = false;
+				callbackFunction(tmp_arr);
+				//this.isBusy = false;
 			});
 		}
 	},
@@ -68,16 +72,18 @@ const ProjectModule = {
 				if (participantObject !== undefined) {
 					if (participantObject.hasOwnProperty('seniorityLevel')) {
 						this.participants.push(participantObject);
+						this.isBusy = false;
 						callbackFunction();
-						this.isBusy = false;
+						//this.isBusy = false;
 					} else {
-						callbackFunction(true);
 						this.isBusy = false;
+						callbackFunction(true);
+						//this.isBusy = false;
 					}
-					this.isBusy = false;
 				} else {
-					callbackFunction(true);
 					this.isBusy = false;
+					callbackFunction(true);
+					//this.isBusy = false;
 				}
 			});
 		}
@@ -88,16 +94,24 @@ const ProjectModule = {
 		} else {
 			this.isBusy = true;
 			setTimeout(() => {
-				for (let i = 0; i < this.participants.length; i++) {
-					if (this.participants[i] === participantObject) {
-						this.participants.splice(i, 1);
-						callbackFunction(participantObject);
-						this.isBusy = false;
-						break;
-					}
-					if (i === this.participants.length - 1) {
-						callbackFunction(null);
-						this.isBusy = false;
+				if (this.participants.length === 0) {
+					this.isBusy = false;
+					callbackFunction(null);
+					//this.isBusy = false;
+				} else {
+					for (let i = 0; i < this.participants.length; i++) {
+						if (this.participants[i] === participantObject) {
+							this.participants.splice(i, 1);
+							this.isBusy = false;
+							callbackFunction(participantObject);
+							//this.isBusy = false;
+							break;
+						}
+						if (i === this.participants.length - 1) {
+							this.isBusy = false;
+							callbackFunction(null);
+							//this.isBusy = false;
+						}
 					}
 				}
 			});
